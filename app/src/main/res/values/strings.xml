@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Voting</string>
+    <string name="test_text">Какой-то тестовый текст</string>
 </resources>
