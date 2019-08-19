@@ -9,13 +9,15 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface TargetDao {
+public interface TargetDAO {
     @Insert
-    Long insertTarget(Target target);
+    Long insert(Target target);
     @Update
-    int updateTarget(Target target);
+    int update(Target target);
     @Delete
-    void deleteTargets(Target ... target);
+    void delete(Target ... target);
     @Query("SELECT * FROM target")
     List<Target> getAll();
+    @Query("SELECT * FROM target WHERE id = :id")
+    public Target findByID(long id);
 }

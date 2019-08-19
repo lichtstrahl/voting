@@ -18,4 +18,6 @@ public interface VotingDAO {
     void delete(Voting ... votings);
     @Query("SELECT * FROM voting")
     List<Voting> getAll();
+    @Query("SELECT * FROM voting WHERE id = :id")
+    Voting findByID(long id);
 }

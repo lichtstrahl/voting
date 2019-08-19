@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import root.iv.voting.App;
 import root.iv.voting.R;
 import root.iv.voting.db.voting.Voting;
+import timber.log.Timber;
 
 public class ListVotingFragment extends Fragment {
 
@@ -38,6 +39,7 @@ public class ListVotingFragment extends Fragment {
         adapter = new VotingAdapter(votings, this::clickItem, getLayoutInflater());
         listVoting.setAdapter(adapter);
         listVoting.setLayoutManager(new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false));
+        getActivity().setTitle(R.string.title_all_voting);
 
         return view;
     }
@@ -51,6 +53,8 @@ public class ListVotingFragment extends Fragment {
 
     public void clickItem(View view) {
         int index = listVoting.indexOfChild(view);
-        Toast.makeText(this.getContext(), adapter.getItem(index).getName(), Toast.LENGTH_SHORT).show();
+        Voting voting = adapter.getItem(index);
+        VotingDetailsDialog dialog = VotingDetailsDialog.getInstance(voting);
+        dialog.show(getChildFragmentManager(), "detailDialog");
     }
 }

@@ -9,15 +9,19 @@ import android.view.ViewGroup;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import root.iv.voting.ui.fragment.voting.CreateVotingFragment;
+import root.iv.voting.ui.fragment.target.create.CreateTargetFragment;
+import root.iv.voting.ui.fragment.voting.create.CreateVotingFragment;
 import root.iv.voting.ui.fragment.voting.list.ListVotingFragment;
+import root.iv.voting.ui.fragment.voting.list.VotingDetailsDialog;
 import root.iv.voting.ui.fragment.voting.menu.MenuVotingFragment;
 import root.iv.voting.R;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity
         implements
         MenuVotingFragment.Listener,
-        CreateVotingFragment.Listener
+        CreateVotingFragment.Listener,
+        VotingDetailsDialog.Listener
 {
 
     @BindView(R.id.viewContent)
@@ -40,6 +44,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void clickAddVoting() {
         setupFragment(CreateVotingFragment.getInstance(), true);
+    }
+
+    @Override
+    public void clickAddTargetToVoating(long vID) {
+        setupFragment(CreateTargetFragment.getInstance(vID), true);
     }
 
 

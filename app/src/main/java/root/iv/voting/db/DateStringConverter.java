@@ -14,12 +14,12 @@ public class DateStringConverter {
     private static final SimpleDateFormat FMT_DATE_TIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 
     @TypeConverter
-    public String toString(Calendar calendar) {
+    public static String toString(Calendar calendar) {
         return FMT_DATE_TIME.format(calendar.getTime());
     }
 
     @TypeConverter
-    public Calendar toDate(String date) {
+    public static Calendar toDate(String date) {
         Calendar calendar = Calendar.getInstance();
 
         try {

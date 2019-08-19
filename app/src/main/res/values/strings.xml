@@ -5,4 +5,11 @@
     <string name="menu_item_add_voting">Создать голосование</string>
     <string name="menu_item_view_all_voting">Список голосований</string>
     <string name="button_save">Сохранить</string>
+    <string name="title_create_voting">Создание голосования</string>
+    <string name="title_all_voting">Голосования</string>
+    <string name="button_edit">Редактировать</string>
+    <string name="button_add_target_to_voting">Добавить вариант</string>
+    <string name="title_create_target">Создание цели</string>
+    <string name="hint_input_target_name">Имя цели</string>
+    <string name="hint_input_target_desc">Описание</string>
 </resources>

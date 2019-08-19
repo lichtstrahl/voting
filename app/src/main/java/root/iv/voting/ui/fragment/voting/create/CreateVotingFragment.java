@@ -1,15 +1,16 @@
-package root.iv.voting.ui.fragment.voting;
+package root.iv.voting.ui.fragment.voting.create;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,8 +22,10 @@ import butterknife.OnClick;
 import root.iv.voting.App;
 import root.iv.voting.R;
 import root.iv.voting.db.voting.Voting;
+import timber.log.Timber;
 
 public class CreateVotingFragment extends Fragment {
+    private static final String NEED_UNIQUE_NAME = "Требуется уникальное имя для нового голосования";
 
     @BindView(R.id.inputVotingName)
     protected EditText inputName;
@@ -43,6 +46,7 @@ public class CreateVotingFragment extends Fragment {
 
         app = (App) this.getContext().getApplicationContext();
         inputName.addTextChangedListener(new ChangeTextListener());
+        getActivity().setTitle(R.string.title_create_voting);
         return view;
     }
 
@@ -65,8 +69,14 @@ public class CreateVotingFragment extends Fragment {
     @OnClick(R.id.buttonSaveVoting)
     public void clickSave() {
         Voting voting = Voting.create(inputName.getText().toString());
-        app.getDB().votingDAO().insert(voting);
-        this.getActivity().onBackPressed();
+        try {
+            app.getDB().votingDAO().insert(voting);
+            this.getActivity().onBackPressed();
+        } catch (SQLiteConstraintException e) {
+            Toast.makeText(this.getContext(), NEED_UNIQUE_NAME, Toast.LENGTH_SHORT).show();
+            Timber.e(e, NEED_UNIQUE_NAME);
+            buttonSave.setEnabled(false);
+        }
     }
 
     public interface Listener {

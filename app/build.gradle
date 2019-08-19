@@ -70,4 +70,6 @@ dependencies {
     // RxJava
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    // Design
+    implementation "com.google.android.material:material:$androidXVersion"
 }
