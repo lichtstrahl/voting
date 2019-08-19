@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_screen_border_h">12dp</dimen>
+    <dimen name="margin_list_item_v">5dp</dimen>
+    <dimen name="margin_std">5dp</dimen>
+</resources>

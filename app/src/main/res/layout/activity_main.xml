@@ -3,12 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/viewText"
+    <FrameLayout
+        android:id="@+id/viewContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:text="@string/test_text"/>
+        android:layout_height="match_parent">
+    </FrameLayout>
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package root.iv.voting
+package root.iv.voting.utils
 
 import java.util.*
 

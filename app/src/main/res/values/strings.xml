@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Voting</string>
     <string name="test_text">Какой-то тестовый текст</string>
+    <string name="plus">+</string>
+    <string name="menu_item_add_voting">Создать голосование</string>
+    <string name="menu_item_view_all_voting">Список голосований</string>
+    <string name="button_save">Сохранить</string>
 </resources>
