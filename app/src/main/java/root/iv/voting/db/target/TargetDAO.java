@@ -19,5 +19,11 @@ public interface TargetDAO {
     @Query("SELECT * FROM target")
     List<Target> getAll();
     @Query("SELECT * FROM target WHERE id = :id")
-    public Target findByID(long id);
+    Target findByID(long id);
+    @Query( "SELECT * FROM target WHERE id IN (" +
+                "SELECT target " +
+                "FROM voting_target " +
+                "WHERE voting = :vID" +
+            ")")
+    List<Target> findForVoting(long vID);
 }

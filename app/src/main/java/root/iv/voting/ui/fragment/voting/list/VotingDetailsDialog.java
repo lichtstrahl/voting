@@ -10,6 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,7 +21,9 @@ import butterknife.OnClick;
 import root.iv.voting.App;
 import root.iv.voting.R;
 import root.iv.voting.db.DateStringConverter;
+import root.iv.voting.db.target.Target;
 import root.iv.voting.db.voting.Voting;
+import timber.log.Timber;
 
 public class VotingDetailsDialog extends DialogFragment {
     private static final String ARG_ID = "arg:id";
@@ -26,6 +32,9 @@ public class VotingDetailsDialog extends DialogFragment {
     protected TextView viewVotingName;
     @BindView(R.id.viewVotingCreated)
     protected TextView viewVotingCreated;
+    @BindView(R.id.listTargets)
+    protected RecyclerView listTargets;
+    private TargetAdapter adapter;
     private App app;
     private Listener listener;
     private long voatingID;
@@ -54,6 +63,10 @@ public class VotingDetailsDialog extends DialogFragment {
             Voting voting = app.getDB().votingDAO().findByID(voatingID);
             viewVotingName.setText(voting.getName());
             String created = DateStringConverter.toString(voting.getCreated());
+            List<Target> targets = app.getDB().targetDAO().findForVoting(voatingID);
+            adapter = new TargetAdapter(targets, getLayoutInflater(), this::clickItem);
+            listTargets.setAdapter(adapter);
+            listTargets.setLayoutManager(new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false));
             viewVotingCreated.setText(String.format("Создано: %s", created));
         }
 
@@ -68,6 +81,10 @@ public class VotingDetailsDialog extends DialogFragment {
         } else {
             throw new IllegalArgumentException("Невозможно создать фрагмент с таким контекстом. Требуется реализация интерфейса");
         }
+    }
+
+    public void clickItem(View view) {
+
     }
 
     @Override
