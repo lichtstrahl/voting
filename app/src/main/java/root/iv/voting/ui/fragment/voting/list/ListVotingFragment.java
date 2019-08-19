@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import root.iv.voting.App;
 import root.iv.voting.R;
 import root.iv.voting.db.voting.Voting;
-import timber.log.Timber;
+import root.iv.voting.utils.adapter.VotingTouchCallback;
 
 public class ListVotingFragment extends Fragment {
 
@@ -33,14 +33,10 @@ public class ListVotingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_voting_all, container, false);
         ButterKnife.bind(this, view);
-
+        getActivity().setTitle(R.string.title_all_voting);
         app = (App) this.getContext().getApplicationContext();
         List<Voting> votings = app.getDB().votingDAO().getAll();
-        adapter = new VotingAdapter(votings, this::clickItem, getLayoutInflater());
-        listVoting.setAdapter(adapter);
-        listVoting.setLayoutManager(new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false));
-        getActivity().setTitle(R.string.title_all_voting);
-
+        initRecyclerView(votings);
         return view;
     }
 
@@ -56,5 +52,25 @@ public class ListVotingFragment extends Fragment {
         Voting voting = adapter.getItem(index);
         VotingDetailsDialog dialog = VotingDetailsDialog.getInstance(voting);
         dialog.show(getChildFragmentManager(), "detailDialog");
+    }
+
+    private void initRecyclerView(List<Voting> votings) {
+        adapter = new VotingAdapter(votings, this::clickItem, getLayoutInflater());
+        ItemTouchHelper touchHelper = new ItemTouchHelper(new VotingTouchCallback(this::onDismiss, this::onMoveItem));
+        touchHelper.attachToRecyclerView(listVoting);
+        listVoting.setAdapter(adapter);
+        listVoting.setLayoutManager(new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false));
+    }
+
+    private void onMoveItem(int from, int to) {
+        adapter.notifyItemMoved(from, to);
+    }
+
+    private void onDismiss(int pos) {
+        Voting voting = adapter.getItem(pos);
+        app.getDB().votingTargetDAO().deleteForVoting(voting.getId());
+        app.getDB().votingDAO().delete(voting);
+        adapter.onItemDismiss(pos);
+
     }
 }

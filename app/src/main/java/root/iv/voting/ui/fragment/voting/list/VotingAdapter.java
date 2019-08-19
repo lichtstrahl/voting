@@ -8,17 +8,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Collections;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
 import root.iv.voting.R;
 import root.iv.voting.db.voting.Voting;
 import root.iv.voting.utils.RecyclerAdapter;
+import root.iv.voting.utils.adapter.ItemTouchHelperAdapter;
 
 @AllArgsConstructor
 public class VotingAdapter
         extends RecyclerView.Adapter<VotingAdapter.ViewHolder>
-        implements RecyclerAdapter<Voting>
+        implements ItemTouchHelperAdapter<Voting>
 
 {
     private List<Voting> votings;
@@ -51,6 +53,26 @@ public class VotingAdapter
         int count = votings.size();
         votings.clear();
         notifyItemRangeRemoved(0, count);
+    }
+
+    @Override
+    public boolean onItemMove(int from, int to) {
+        if (from < to) {
+            for (int i = from; i < to; i++)
+                Collections.swap(votings, i, i+1);
+        } else {
+            for (int i = from; i > to; i--)
+                Collections.swap(votings, i, i-1);
+        }
+        notifyItemMoved(from, to);
+        return true;
+    }
+
+
+    @Override
+    public void onItemDismiss(int position) {
+        votings.remove(position);
+        notifyItemRemoved(position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
