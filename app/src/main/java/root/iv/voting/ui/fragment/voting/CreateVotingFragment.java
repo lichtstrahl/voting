@@ -2,10 +2,13 @@ package root.iv.voting.ui.fragment.voting;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -23,6 +26,8 @@ public class CreateVotingFragment extends Fragment {
 
     @BindView(R.id.inputVotingName)
     protected EditText inputName;
+    @BindView(R.id.buttonSaveVoting)
+    protected Button buttonSave;
     private App app;
     private Listener listener;
 
@@ -37,7 +42,7 @@ public class CreateVotingFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         app = (App) this.getContext().getApplicationContext();
-
+        inputName.addTextChangedListener(new ChangeTextListener());
         return view;
     }
 
@@ -61,10 +66,26 @@ public class CreateVotingFragment extends Fragment {
     public void clickSave() {
         Voting voting = Voting.create(inputName.getText().toString());
         app.getDB().votingDAO().insert(voting);
+        this.getActivity().onBackPressed();
     }
 
     public interface Listener {
     }
 
+    private class ChangeTextListener implements TextWatcher {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            buttonSave.setEnabled(!s.toString().isEmpty());
+        }
+    }
 }

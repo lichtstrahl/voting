@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/inputVotingName"
         android:layout_centerHorizontal="true"
+        android:enabled="false"
         android:text="@string/button_save"/>
 
 </RelativeLayout>

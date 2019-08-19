@@ -8,7 +8,7 @@ import root.iv.voting.db.target.TargetDao;
 import root.iv.voting.db.voting.Voting;
 import root.iv.voting.db.voting.VotingDAO;
 
-@Database(entities = {Target.class, Voting.class}, version = 1, exportSchema = false)
+@Database(entities = {Target.class, Voting.class}, version = 2, exportSchema = false)
 public abstract class AppDB extends RoomDatabase {
     public abstract TargetDao targetDao();
     public abstract VotingDAO votingDAO();

@@ -6,13 +6,16 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import timber.log.Timber;
 
 public class DateStringConverter {
+    private static final SimpleDateFormat FMT_DATE_TIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+
     @TypeConverter
     public String toString(Calendar calendar) {
-        return calendar.getTime().toString();
+        return FMT_DATE_TIME.format(calendar.getTime());
     }
 
     @TypeConverter
@@ -20,8 +23,7 @@ public class DateStringConverter {
         Calendar calendar = Calendar.getInstance();
 
         try {
-            SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
-            calendar.setTime(format.parse(date));
+            calendar.setTime(FMT_DATE_TIME.parse(date));
         } catch (ParseException e) {
             Timber.e(e);
         }

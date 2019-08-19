@@ -2,6 +2,7 @@ package root.iv.voting.db.voting;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
@@ -12,7 +13,9 @@ import lombok.Data;
 import root.iv.voting.db.DateStringConverter;
 
 @Data
-@Entity(tableName = "voting")
+@Entity(tableName = "voting", indices = {
+        @Index(value = {"name"}, unique = true, name = "voting_unique_name")
+})
 public class Voting implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
