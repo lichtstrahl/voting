@@ -23,7 +23,6 @@ import root.iv.voting.R;
 import root.iv.voting.db.DateStringConverter;
 import root.iv.voting.db.target.Target;
 import root.iv.voting.db.voting.Voting;
-import timber.log.Timber;
 
 public class VotingDetailsDialog extends DialogFragment {
     private static final String ARG_ID = "arg:id";
@@ -99,8 +98,15 @@ public class VotingDetailsDialog extends DialogFragment {
         listener.clickAddTargetToVoating(voatingID);
     }
 
+    @OnClick(R.id.buttonVote)
+    public void clickVote() {
+        dismiss();
+        listener.clickVote(voatingID);
+    }
+
     public interface Listener {
         void clickAddTargetToVoating(long vID);
+        void clickVote(long vID);
     }
 
 }

@@ -1,5 +1,6 @@
 package root.iv.voting.ui.fragment.voting.list;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import root.iv.voting.App;
 import root.iv.voting.R;
 import root.iv.voting.db.voting.Voting;
@@ -27,6 +29,14 @@ public class ListVotingFragment extends Fragment {
     protected RecyclerView listVoting;
     private VotingAdapter adapter;
     private App app;
+    private Listener listener;
+
+    public static ListVotingFragment getInstance() {
+        ListVotingFragment fragment = new ListVotingFragment();
+        Bundle bundle = new Bundle();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -40,11 +50,26 @@ public class ListVotingFragment extends Fragment {
         return view;
     }
 
-    public static ListVotingFragment getInstance() {
-        ListVotingFragment fragment = new ListVotingFragment();
-        Bundle bundle = new Bundle();
-        fragment.setArguments(bundle);
-        return fragment;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        app = (App) context.getApplicationContext();
+        if (context instanceof Listener) {
+            listener = (Listener) context;
+        } else {
+            throw new IllegalArgumentException("Контекст не реализует нужный интерфейс");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
+    }
+
+    @OnClick(R.id.buttonCreateVoting)
+    public void clickAddVoting() {
+        listener.clickCreateVoting();
     }
 
     public void clickItem(View view) {
@@ -56,7 +81,7 @@ public class ListVotingFragment extends Fragment {
 
     private void initRecyclerView(List<Voting> votings) {
         adapter = new VotingAdapter(votings, this::clickItem, getLayoutInflater());
-        ItemTouchHelper touchHelper = new ItemTouchHelper(new VotingTouchCallback(this::onDismiss, this::onMoveItem));
+        ItemTouchHelper touchHelper = new ItemTouchHelper(VotingTouchCallback.newHorizontalCallback(this::onDismiss));
         touchHelper.attachToRecyclerView(listVoting);
         listVoting.setAdapter(adapter);
         listVoting.setLayoutManager(new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false));
@@ -71,6 +96,9 @@ public class ListVotingFragment extends Fragment {
         app.getDB().votingTargetDAO().deleteForVoting(voting.getId());
         app.getDB().votingDAO().delete(voting);
         adapter.onItemDismiss(pos);
+    }
 
+    public interface Listener {
+        void clickCreateVoting();
     }
 }

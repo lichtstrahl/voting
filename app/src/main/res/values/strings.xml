@@ -12,4 +12,5 @@
     <string name="title_create_target">Создание цели</string>
     <string name="hint_input_target_name">Имя цели</string>
     <string name="hint_input_target_desc">Описание</string>
+    <string name="button_vote">Голосовать</string>
 </resources>

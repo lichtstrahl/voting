@@ -3,4 +3,5 @@
     <dimen name="margin_screen_border_h">12dp</dimen>
     <dimen name="margin_list_item_v">5dp</dimen>
     <dimen name="margin_std">5dp</dimen>
+    <dimen name="padding_dialog">12dp</dimen>
 </resources>

@@ -14,7 +14,7 @@ import java.util.Locale;
 import lombok.AllArgsConstructor;
 import root.iv.voting.R;
 import root.iv.voting.db.target.Target;
-import root.iv.voting.utils.RecyclerAdapter;
+import root.iv.voting.utils.adapter.RecyclerAdapter;
 
 @AllArgsConstructor
 public class TargetAdapter extends RecyclerView.Adapter<TargetAdapter.ViewHolder> implements RecyclerAdapter<Target> {

@@ -27,4 +27,8 @@ public class Target implements Serializable {
         t.setVote(0);
         return t;
     }
+
+    public void vote() {
+        vote++;
+    }
 }

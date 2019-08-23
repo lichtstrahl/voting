@@ -14,7 +14,6 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import root.iv.voting.R;
 import root.iv.voting.db.voting.Voting;
-import root.iv.voting.utils.RecyclerAdapter;
 import root.iv.voting.utils.adapter.ItemTouchHelperAdapter;
 
 @AllArgsConstructor

@@ -1,5 +1,6 @@
 package root.iv.voting.ui.fragment.target.create;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ public class CreateTargetFragment extends Fragment {
     protected TextView viewVotingName;
     private App app;
     private Voting currentVoting;
+    private Listener listener;
 
     public static CreateTargetFragment getInstance(long vID) {
         CreateTargetFragment fragment = new CreateTargetFragment();
@@ -49,11 +51,28 @@ public class CreateTargetFragment extends Fragment {
         ButterKnife.bind(this, view);
         this.getActivity().setTitle(R.string.title_create_target);
 
-        app = (App)getContext().getApplicationContext();
         currentVoting = app.getDB().votingDAO().findByID(getArguments().getLong(ARG_ID));
         viewVotingName.setText(currentVoting.getName());
 
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        app = (App)getContext().getApplicationContext();
+
+        if (context instanceof Listener) {
+            listener = (Listener) context;
+        } else {
+            throw new IllegalArgumentException("Контекст должен реализовывать интерфейс");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
     }
 
     @OnClick(R.id.buttonSaveTarget)
@@ -62,6 +81,10 @@ public class CreateTargetFragment extends Fragment {
         long id = app.getDB().targetDAO().insert(target);
         Target created = app.getDB().targetDAO().findByID(id);
         app.getDB().votingTargetDAO().insert(VotingTarget.create(currentVoting, created));
-        Toast.makeText(this.getContext(), "Цель создана", Toast.LENGTH_SHORT).show();
+        listener.clickSave();
+    }
+
+    public interface Listener {
+        void clickSave();
     }
 }

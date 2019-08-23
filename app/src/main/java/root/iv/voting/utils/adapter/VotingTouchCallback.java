@@ -5,26 +5,55 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import io.reactivex.functions.BiConsumer;
-import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
-import lombok.AllArgsConstructor;
+import root.iv.voting.db.voting.Voting;
 import timber.log.Timber;
 
-@AllArgsConstructor
 public class VotingTouchCallback extends ItemTouchHelper.Callback {
     private Consumer<Integer> swiped;
     private BiConsumer<Integer, Integer> move;
+    private boolean enableSwipe;
+    private boolean enableMove;
+
+    private static void initVertical(VotingTouchCallback callback, BiConsumer<Integer, Integer> move) {
+        callback.move = move;
+        callback.enableMove = true;
+    }
+
+    private static void initHorizontal(VotingTouchCallback callback, Consumer<Integer> swipe) {
+        callback.swiped = swipe;
+        callback.enableSwipe = true;
+    }
+
+    public static VotingTouchCallback newVerticalCallback(BiConsumer<Integer, Integer> move) {
+        VotingTouchCallback callback = new VotingTouchCallback();
+        initVertical(callback, move);
+        return callback;
+    }
+
+    public static VotingTouchCallback newHorizontalCallback(Consumer<Integer> swipe) {
+        VotingTouchCallback callback = new VotingTouchCallback();
+        initHorizontal(callback, swipe);
+        return callback;
+    }
+
+    public static VotingTouchCallback newMixedCallback(Consumer<Integer> swipe, BiConsumer<Integer, Integer> move) {
+        VotingTouchCallback callback = new VotingTouchCallback();
+        initHorizontal(callback, swipe);
+        initVertical(callback, move);
+        return callback;
+    }
 
     // Разрешаем по долгому нажатию активировать перетаскивание
     @Override
     public boolean isLongPressDragEnabled() {
-        return true;
+        return enableMove;
     }
 
     // Разрешаем смахивание по касанию
     @Override
     public boolean isItemViewSwipeEnabled() {
-        return true;
+        return enableSwipe;
     }
 
 

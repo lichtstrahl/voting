@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/padding_dialog"
     android:orientation="vertical">
 
     <TextView
@@ -23,24 +24,28 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listTargets"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/item_target"
+        tools:itemCount="2">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonAddTargetToVoting"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="@string/button_add_target_to_voting"/>
 
-    <Button
-        android:id="@+id/buttonEditVoting"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonVote"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@string/button_edit"
-        android:enabled="false"/>
+        android:text="@string/button_vote" />
 
 </LinearLayout>
