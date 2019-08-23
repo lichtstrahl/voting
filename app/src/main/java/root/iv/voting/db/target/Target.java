@@ -31,4 +31,8 @@ public class Target implements Serializable {
     public void vote() {
         vote++;
     }
+
+    public void badVote() {
+        if (--vote < 0) vote++;
+    }
 }

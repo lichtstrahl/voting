@@ -4,4 +4,5 @@
     <dimen name="margin_list_item_v">5dp</dimen>
     <dimen name="margin_std">5dp</dimen>
     <dimen name="padding_dialog">12dp</dimen>
+    <dimen name="text_size_std">18sp</dimen>
 </resources>

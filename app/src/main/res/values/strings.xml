@@ -13,4 +13,8 @@
     <string name="hint_input_target_name">Имя цели</string>
     <string name="hint_input_target_desc">Описание</string>
     <string name="button_vote">Голосовать</string>
+    <string name="label_switch_clik_type_target">Убавлять при касании</string>
+    <string name="title_warning">Предупреждение</string>
+    <string name="alert_dec_vote">Вы уверены, что хотите отменить голос?</string>
+    <string name="label_yes">Да</string>
 </resources>

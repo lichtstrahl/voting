@@ -1,10 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/listTargets"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:listitem="@layout/item_target">
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.recyclerview.widget.RecyclerView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listTargets"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:listitem="@layout/item_target"/>
+
+    <TextView
+        android:id="@+id/labelSwitchEditType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@id/switchEditType"
+        android:layout_alignTop="@id/switchEditType"
+        android:layout_alignBottom="@id/switchEditType"
+        android:textAlignment="gravity"
+        android:gravity="center_vertical"
+        android:text="@string/label_switch_clik_type_target"
+        android:textSize="@dimen/text_size_std"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchEditType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/margin_std"
+        tools:checked="true"/>
+
+</RelativeLayout>
