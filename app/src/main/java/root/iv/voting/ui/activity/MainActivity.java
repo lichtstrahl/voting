@@ -7,8 +7,14 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.ViewGroup;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import root.iv.voting.App;
 import root.iv.voting.ui.fragment.target.create.CreateTargetFragment;
 import root.iv.voting.ui.fragment.vote.VoteFragment;
 import root.iv.voting.ui.fragment.voting.create.CreateVotingFragment;
@@ -36,6 +42,14 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        App app = (App)getApplication();
+        app.getAnswerAPI().getAllAnswers()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess(answers -> Timber.i("Count answers: %d", answers.size()))
+                .doOnError(Timber::e)
+                .subscribe();
+        
         setupFragment(ListVotingFragment.getInstance(), false);
     }
 
